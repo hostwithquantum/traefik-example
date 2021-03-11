@@ -1,0 +1,38 @@
+version: '3.7'
+
+volumes:
+  acme:
+
+services:
+  traefik:
+    image: ${CUSTOMER_REGISTRY}/${CUSTOMER_PROJECT}/traefik:latest
+    ports:
+      - target: 80
+        published: 80
+        protocol: tcp
+        mode: host
+      - target: 443
+        published: 443
+        protocol: tcp
+        mode: host
+    networks:
+      - public
+    labels:
+      - traefik.port=8080
+      - traefik.docker.network=public
+      - traefik.backend=traefik
+      - traefik.frontend.rule=Host:traefik.${TRAEFIK_DOMAIN}
+      - traefik.enable=true
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - acme:/mnt/acme
+    deploy:
+      mode: global
+      placement:
+        constraints:
+          - node.role == manager
+
+networks:
+  public:
+    name: public
+    external: true

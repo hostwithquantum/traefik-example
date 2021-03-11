@@ -1,0 +1,10 @@
+# for deployment
+export QUANTUM_USER=
+export QUANTUM_PASSWORD=
+export QUANTUM_ENDPOINT=
+
+# for building
+export CUSTOMER_REGISTRY=
+export CUSTOMER_PROJECT=
+export CUSTOMER_EMAIL=
+export TRAEFIK_DOMAIN=

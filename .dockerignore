@@ -1,0 +1,7 @@
+.envrc
+.envrc-dist
+.gitignore
+Makefile
+docker-compose.yml
+stack.yml
+README.md
