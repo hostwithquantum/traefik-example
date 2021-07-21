@@ -30,6 +30,11 @@ deploy: guard-QUANTUM_USER guard-QUANTUM_PASSWORD guard-QUANTUM_ENDPOINT
 			--create --wait \
 			--stack ${QUANTUM_ENDPOINT}-traefik
 
+.PHONY: local
+local: build
+	-docker network create public --scope swarm --driver overlay
+	docker stack deploy -c docker-compose.yml traefik-example
+
 guard-%:
 	@ if [ "${${*}}" = "" ]; then \
         echo "Environment variable $* not set"; \
