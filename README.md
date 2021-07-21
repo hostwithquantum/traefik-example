@@ -2,6 +2,11 @@
 
 How to run your own Traefik (v1.7). This example setup is heavily tailered towards deployments on [Planetary Quantum](https://www.planetary-quantum.com/). It can serve as another example for a lean and small deployment pipeline.
 
+The Traefik here is the same version and in a similar configuration to the one
+that (optionally) comes with Planetary Quantum cluster - in other words,
+[everything described in our docs](https://docs.planetary-quantum.com/common-tasks/portainer-traefik/)
+will work with it.
+
 Questions, comments? Feel free to open an issue. :-)
 
 ## Setup
@@ -27,6 +32,16 @@ These variables are in the example `.envrc-dist` file. You need to customize the
 | CUSTOMER_EMAIL | An email address for Let's Encrypt |
 | TRAEFIK_DOMAIN | The domain of your endpoint/cluster, e.g. `$customer.customer.planetary-quantum.net` |
 
+## Custom TLS Certificates
+
+To demonstrate basic custom certificate usage, this repo comes with a
+self-signed example certificate for `example.127.0.0.1.nip.io`.
+(Other domains will automatically get Let's Encrypt certificates.)
+
+To add your own certificates:
+* adjust `traefik.tpl.toml` under `entryPoints.https.tls.certificates` to
+  include all your certificates
+* adjust the Dockerfile to COPY them all into the image
 
 ## Build and publish the the image
 

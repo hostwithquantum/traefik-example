@@ -7,7 +7,7 @@ GUCCI_VERSION=1.2.4
 all: build push
 
 .PHONY: build
-build:
+build: guard-TRAEFIK_DOMAIN guard-CUSTOMER_EMAIL guard-CUSTOMER_REGISTRY guard-CUSTOMER_PROJECT
 	docker build \
 		--build-arg="ARG_GUCCI_VERSION=$(GUCCI_VERSION)" \
 		--build-arg="ARG_CUSTOMER_EMAIL=${CUSTOMER_EMAIL}" \
@@ -15,18 +15,11 @@ build:
 		-t $(IMAGE):latest .
 
 .PHONY: push
-push:
+push: guard-CUSTOMER_EMAIL guard-CUSTOMER_REGISTRY guard-CUSTOMER_PROJECT
 	docker push $(IMAGE):latest
 
-.PHONY: clean
-clean:
-	rm docker-compose.yml
-
-docker-compose.yml:
-	docker-compose -f stack.yml config > docker-compose.yml
-
 .PHONY: deploy
-deploy: docker-compose.yml
+deploy: guard-QUANTUM_USER guard-QUANTUM_PASSWORD guard-QUANTUM_ENDPOINT
 	docker run \
 		-e QUANTUM_USER \
 		-e QUANTUM_PASSWORD \
@@ -36,3 +29,14 @@ deploy: docker-compose.yml
 		quantum-cli stacks update \
 			--create --wait \
 			--stack ${QUANTUM_ENDPOINT}-traefik
+
+.PHONY: local
+local: build
+	-docker network create public --scope swarm --driver overlay
+	docker stack deploy -c docker-compose.yml traefik-example
+
+guard-%:
+	@ if [ "${${*}}" = "" ]; then \
+        echo "Environment variable $* not set"; \
+        exit 1; \
+    fi
