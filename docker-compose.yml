@@ -17,12 +17,6 @@ services:
         mode: host
     networks:
       - public
-    labels:
-      - traefik.port=8080
-      - traefik.docker.network=public
-      - traefik.backend=traefik
-      - traefik.frontend.rule=Host:traefik.${TRAEFIK_DOMAIN}
-      - traefik.enable=true
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - acme:/mnt/acme
@@ -31,6 +25,12 @@ services:
       placement:
         constraints:
           - node.role == manager
+      labels:
+        - traefik.port=8080
+        - traefik.docker.network=public
+        - traefik.backend=traefik
+        - traefik.frontend.rule=Host:traefik.${TRAEFIK_DOMAIN}
+        - traefik.enable=true
 
 networks:
   public:

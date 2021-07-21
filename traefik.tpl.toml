@@ -25,6 +25,7 @@ endpoint = "unix:///var/run/docker.sock"
 domain = "{{ .TRAEFIK_DOMAIN }}"
 watch = true
 exposedByDefault = false
+swarmMode = true
 
 [acme]
 email = "{{ .CUSTOMER_EMAIL }}"

@@ -2,6 +2,11 @@
 
 How to run your own Traefik (v1.7). This example setup is heavily tailered towards deployments on [Planetary Quantum](https://www.planetary-quantum.com/). It can serve as another example for a lean and small deployment pipeline.
 
+The Traefik here is the same version and in a similar configuration to the one
+that (optionally) comes with Planetary Quantum cluster - in other words,
+[everything described in our docs](https://docs.planetary-quantum.com/common-tasks/portainer-traefik/)
+will work with it.
+
 Questions, comments? Feel free to open an issue. :-)
 
 ## Setup
