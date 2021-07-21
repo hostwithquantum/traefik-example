@@ -22,11 +22,8 @@ push:
 clean:
 	rm docker-compose.yml
 
-docker-compose.yml:
-	docker-compose -f stack.yml config > docker-compose.yml
-
 .PHONY: deploy
-deploy: docker-compose.yml
+deploy:
 	docker run \
 		-e QUANTUM_USER \
 		-e QUANTUM_PASSWORD \
