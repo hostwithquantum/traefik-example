@@ -32,6 +32,16 @@ These variables are in the example `.envrc-dist` file. You need to customize the
 | CUSTOMER_EMAIL | An email address for Let's Encrypt |
 | TRAEFIK_DOMAIN | The domain of your endpoint/cluster, e.g. `$customer.customer.planetary-quantum.net` |
 
+## Custom TLS Certificates
+
+To demonstrate basic custom certificate usage, this repo comes with a
+self-signed example certificate for `example.127.0.0.1.nip.io`.
+(Other domains will automatically get Let's Encrypt certificates.)
+
+To add your own certificates:
+* adjust `traefik.tpl.toml` under `entryPoints.https.tls.certificates` to
+  include all your certificates
+* adjust the Dockerfile to COPY them all into the image
 
 ## Build and publish the the image
 

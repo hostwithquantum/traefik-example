@@ -24,3 +24,5 @@ ADD traefik.tpl.toml /tmp/traefik.tpl.toml
 
 # Generate config
 RUN gucci /tmp/traefik.tpl.toml > /traefik.toml
+
+COPY certs /certs
